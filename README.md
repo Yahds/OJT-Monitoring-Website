@@ -7,7 +7,7 @@ This is a website that allows an adviser or an admin to monitor the ojt progress
 ## Tutorial
 # Set up SQL database
 Note: Make sure you have a tool to use for MySQL (phpMyAdmin or MySQL Workbench) and the Wampserver downloaded
-1. After cloning the repository, either checkout to the node-js or php branch to download the ojt.sql
+1. After cloning the repository, download the ojt.sql
 2. Run the Wampserver and import the ojt.sql in the chosen tool to view the data.
    - For example in MySQL Workbench:
      a. Select a MySWL Connection
