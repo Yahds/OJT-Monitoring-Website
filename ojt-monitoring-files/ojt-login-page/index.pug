@@ -1,0 +1,66 @@
+meta(charset="UTF-8")
+meta(name="viewport", content="width=device-width,initial-scale=1")
+title Login Page
+link(rel="stylesheet" type="text/css" href="/ojt-login-page/styles.css")
+.login-box
+  .blue-box
+    .login-details-box
+      h1 Log in
+      hr
+      h3 Adviser
+      p Shaping skills and fostering growth.
+  .white-box
+    .slu-logo-box
+      img.slu-logo(src="/ojt-images/slu-logo.png")
+    form.login-fields-box#loginForm(method="POST")
+      label(for="email") Email Address
+      input#email(type="text", name="adviserEmail")
+      label(for="password") Password
+      input#password(type="password", name="password")
+      label.checkbox-container
+        | Show Password
+
+        input#showPasswordCheckbox(type="checkbox")
+        span.checkmark
+      button.login-button#loginButton(type="submit") Log in
+      
+script.
+  document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const showPasswordCheckbox = document.getElementById('showPasswordCheckbox');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent default form submission
+
+      // Check if email or password fields are empty
+      if (!emailInput.value || !passwordInput.value) {
+        alert('Please enter both email and password.');
+        return;
+      }
+
+      fetch('/ojt-login-page', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `adviserEmail=${encodeURIComponent(emailInput.value)}&password=${encodeURIComponent(passwordInput.value)}`
+      })
+      .then(response => response.text())
+      .then(text => {
+        if (text === 'false') {
+          alert('Invalid email or password. Please try again.');
+        } else {
+          window.location.href = '/ojt-dashboard'; // Redirect on successful login
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+
+    showPasswordCheckbox.addEventListener('change', function() {
+      passwordInput.type = this.checked ? 'text' : 'password';
+    });
+  });
